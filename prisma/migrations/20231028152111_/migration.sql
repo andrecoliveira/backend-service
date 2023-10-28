@@ -1,13 +1,13 @@
 -- CreateTable
-CREATE TABLE "users" (
+CREATE TABLE "reservations" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "reservations_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_phone_key" ON "users"("phone");
+CREATE UNIQUE INDEX "reservations_phone_key" ON "reservations"("phone");

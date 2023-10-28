@@ -24,7 +24,7 @@ export class CreateReservationController {
 
   @Get()
   getReservations() {
-    return this.prisma.user.findMany()
+    return this.prisma.reservation.findMany()
   }
 
   @Post()
@@ -33,7 +33,7 @@ export class CreateReservationController {
   async postReservations(@Body() body: CreateReservationBodySchema) {
     const { name, phone } = body
 
-    const userWithSameEmail = await this.prisma.user.findUnique({
+    const userWithSameEmail = await this.prisma.reservation.findUnique({
       where: {
         phone,
       },
@@ -42,7 +42,7 @@ export class CreateReservationController {
     if (userWithSameEmail)
       throw new ConflictException('User with same email already exists')
 
-    await this.prisma.user.create({
+    await this.prisma.reservation.create({
       data: {
         name,
         phone,

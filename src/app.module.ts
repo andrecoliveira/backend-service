@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { PrismaService } from './prisma/prisma.service'
-import { CreateReservationController } from './controllers/create-reservation.controller'
+import { CreateReservationController } from './controllers/reservation.controller'
 import { envSchema } from './env'
 
 @Module({
