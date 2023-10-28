@@ -1,8 +1,9 @@
 @baseUrl = http://localhost:3333
+@contentType = application/json
 
 # @name create_reservation
 POST {{baseUrl}}/reservations
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
     "name": "John Doe",
@@ -13,5 +14,17 @@ Content-Type: application/json
 
 # @name list_reservation
 GET {{baseUrl}}/reservations
-Content-Type: application/json
+Content-Type: {{contentType}}
+
+###
+
+@useID = 65dbd8e0-c932-4f61-905c-5d1d5dc14db5
+
+# @name send_message
+POST {{baseUrl}}/reservations/message/{{useID}}
+Content-Type: {{contentType}}
+
+{
+    "message": "Hello World"
+}
 
