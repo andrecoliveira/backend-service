@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:3333
+
+# @name create_reservation
+POST {{baseUrl}}/reservations
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "phone": "85999999999"
+}
+
+###
+
+# @name list_reservation
+GET {{baseUrl}}/reservations
+Content-Type: application/json
+
