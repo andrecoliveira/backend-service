@@ -21,3 +21,22 @@ model Reservation {
   @@map("reservations")
 }
 
+model BasicRestaurantInformation {
+  id String @id @default(uuid())
+  name String
+  phone String
+  category String
+  city String
+  state String
+  streetName String
+  StreetNumber String
+  streetComplement String
+  zipCode String
+  schedule String
+  description String
+  instagramPath String
+  websitePath String
+
+  @@map("restaurants")
+}
+
