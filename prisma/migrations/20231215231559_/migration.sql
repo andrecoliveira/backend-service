@@ -19,7 +19,7 @@ CREATE TABLE "restaurants" (
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "streetName" TEXT NOT NULL,
-    "StreetNumber" TEXT NOT NULL,
+    "streetNumber" TEXT NOT NULL,
     "streetComplement" TEXT NOT NULL,
     "zipCode" TEXT NOT NULL,
     "schedule" TEXT NOT NULL,

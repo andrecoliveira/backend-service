@@ -17,3 +17,7 @@ Comando para abrir o Prisma Studio
 Comando para subir o projeto em dev
 
 - pnpm run start:dev
+
+Comando para realizar testes E2E
+
+- pnpm test:e2e

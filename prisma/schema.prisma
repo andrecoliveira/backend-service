@@ -29,7 +29,7 @@ model BasicRestaurantInformation {
   city String
   state String
   streetName String
-  StreetNumber String
+  streetNumber String
   streetComplement String
   zipCode String
   schedule String

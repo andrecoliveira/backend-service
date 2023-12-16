@@ -18,4 +18,30 @@ Content-Type: {{contentType}}
 
 ###
 
+# @name create_restaurant
+POST {{baseUrl}}/restaurants
+Content-Type: {{contentType}}
+
+{
+    "name": "Doc bar",
+    "phone": "85999999992",
+    "category": "bar",
+    "city": "São Paulo",
+    "state": "SP",
+    "streetName": "Rua dos bobos",
+    "streetNumber": "10",
+    "streetComplement": "Apto 10",
+    "zipCode": "00000000",
+    "schedule": "10:00-22:00",
+    "description": "Barzinho da esquina",
+    "instagramPath": "https://www.instagram.com/docbar",
+    "websitePath": "https://www.docbar.com.br"
+}
+
+###
+
+# @name list_restaurants
+GET {{baseUrl}}/restaurants
+Content-Type: {{contentType}}
+
 
