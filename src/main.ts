@@ -1,13 +1,17 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
+import { NestExpressApplication } from '@nestjs/platform-express'
+import * as path from 'path'
 import { Env } from './env'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   const configService = app.get<ConfigService<Env, true>>(ConfigService)
   const port = configService.get('PORT', { infer: true })
+
+  app.useStaticAssets(path.join(__dirname, '../uploads'))
 
   await app.listen(port)
 }

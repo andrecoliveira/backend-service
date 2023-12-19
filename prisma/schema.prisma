@@ -24,19 +24,20 @@ model Reservation {
 
 model BasicRestaurantInformation {
   id String @id @default(uuid())
-  name String
-  phone String
-  category String
-  city String
-  state String
-  streetName String
-  streetNumber String
-  streetComplement String
-  zipCode String
-  schedule String
-  description String
-  instagramPath String
-  websitePath String
+  name String?
+  phone String?
+  category String?
+  city String?
+  state String?
+  streetName String?
+  streetNumber String?
+  streetComplement String?
+  zipCode String?
+  schedule String?
+  description String?
+  profileImage String?
+  instagramPath String?
+  websitePath String?
 
   @@map("restaurants")
 }

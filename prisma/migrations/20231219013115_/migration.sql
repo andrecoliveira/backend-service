@@ -13,19 +13,20 @@ CREATE TABLE "reservations" (
 -- CreateTable
 CREATE TABLE "restaurants" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "streetName" TEXT NOT NULL,
-    "streetNumber" TEXT NOT NULL,
-    "streetComplement" TEXT NOT NULL,
-    "zipCode" TEXT NOT NULL,
-    "schedule" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "instagramPath" TEXT NOT NULL,
-    "websitePath" TEXT NOT NULL,
+    "name" TEXT,
+    "phone" TEXT,
+    "category" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "streetName" TEXT,
+    "streetNumber" TEXT,
+    "streetComplement" TEXT,
+    "zipCode" TEXT,
+    "schedule" TEXT,
+    "description" TEXT,
+    "profileImage" TEXT,
+    "instagramPath" TEXT,
+    "websitePath" TEXT,
 
     CONSTRAINT "restaurants_pkey" PRIMARY KEY ("id")
 );
