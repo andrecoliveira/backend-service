@@ -4,21 +4,13 @@ import {
   Get,
   HttpCode,
   Post,
-  UploadedFile,
   UseGuards,
-  UseInterceptors,
-  UsePipes,
 } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { diskStorage } from 'multer'
-import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
-import { PrismaService } from 'src/prisma/prisma.service'
-import { z } from 'zod'
-import { v4 as uuidv4 } from 'uuid'
 import { AuthGuard } from '@nestjs/passport'
+import { z } from 'zod'
+import { PrismaService } from '@/prisma/prisma.service'
 import { CurrentUser } from '@/auth/current-user.decorator'
-import { UserPayload } from '@/auth/jwt.strategy'
-import { get } from 'node:http'
+import { userPayload } from '@/auth/jwt.strategy'
 
 const createRestaurantBodySchema = z.object({
   name: z.string(),
@@ -36,10 +28,7 @@ const createRestaurantBodySchema = z.object({
   websitePath: z.string(),
 })
 
-const uploadProfileImageSchema = z.object({
-  file: z.custom<File>(),
-})
-
+type UserPayload = z.infer<typeof userPayload>
 type CreateRestaurantBodySchema = z.infer<typeof createRestaurantBodySchema>
 
 @Controller('restaurants')
@@ -79,30 +68,6 @@ export class CreateRestaurantController {
     return this.prisma.basicRestaurantInformation.findFirst({
       where: { userId: user.sub },
     })
-  }
-
-  @Post('upload')
-  @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(uploadProfileImageSchema))
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (_, file, cb) => {
-          const [, extension] = file.originalname.split('.')
-          const uniqueSuffix = `${uuidv4()}.${extension}`
-          cb(null, uniqueSuffix)
-        },
-      }),
-    }),
-  )
-  async uploadFile(@UploadedFile() file, @CurrentUser() user: UserPayload) {
-    // console.log(file)
-    // const filePath = `/uploads/${file.filename}`
-    // const userId = user.sub
-    // const restaurant = await this.getRestaurantInformation(userId)
-    // if (restaurant) {
-    // }
   }
 
   @Post()

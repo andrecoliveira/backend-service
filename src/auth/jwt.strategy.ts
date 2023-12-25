@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { Env } from '../env'
 import { Injectable } from '@nestjs/common'
 
-const userPayload = z.object({
+export const userPayload = z.object({
   sub: z.string().uuid(),
 })
 
