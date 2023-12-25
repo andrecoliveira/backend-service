@@ -5,6 +5,7 @@ import {
   HttpCode,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common'
@@ -14,6 +15,10 @@ import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
 import { v4 as uuidv4 } from 'uuid'
+import { AuthGuard } from '@nestjs/passport'
+import { CurrentUser } from '@/auth/current-user.decorator'
+import { UserPayload } from '@/auth/jwt.strategy'
+import { get } from 'node:http'
 
 const createRestaurantBodySchema = z.object({
   name: z.string(),
@@ -38,12 +43,42 @@ const uploadProfileImageSchema = z.object({
 type CreateRestaurantBodySchema = z.infer<typeof createRestaurantBodySchema>
 
 @Controller('restaurants')
+@UseGuards(AuthGuard('jwt'))
 export class CreateRestaurantController {
   constructor(private prisma: PrismaService) {}
 
+  getRestaurantInformation(userId: string) {
+    return this.prisma.basicRestaurantInformation.findFirst({
+      where: { userId },
+    })
+  }
+
+  updateRestaurantInformation(
+    restaurantId: string,
+    newData: CreateRestaurantBodySchema,
+  ) {
+    return this.prisma.basicRestaurantInformation.update({
+      where: { id: restaurantId },
+      data: {
+        ...newData,
+      },
+    })
+  }
+
+  createRestaurantInformation(
+    userId: string,
+    data: CreateRestaurantBodySchema,
+  ) {
+    return this.prisma.basicRestaurantInformation.create({
+      data: { ...data, userId },
+    })
+  }
+
   @Get()
-  getRestaurants() {
-    return this.prisma.basicRestaurantInformation.findMany()
+  getRestaurants(@CurrentUser() user: UserPayload) {
+    return this.prisma.basicRestaurantInformation.findFirst({
+      where: { userId: user.sub },
+    })
   }
 
   @Post('upload')
@@ -61,19 +96,29 @@ export class CreateRestaurantController {
       }),
     }),
   )
-  async uploadFile(@UploadedFile() file) {
-    const filePath = `/uploads/${file.filename}`
-    await this.prisma.basicRestaurantInformation.create({
-      data: { profileImage: filePath },
-    })
+  async uploadFile(@UploadedFile() file, @CurrentUser() user: UserPayload) {
+    // console.log(file)
+    // const filePath = `/uploads/${file.filename}`
+    // const userId = user.sub
+    // const restaurant = await this.getRestaurantInformation(userId)
+    // if (restaurant) {
+    // }
   }
 
   @Post()
   @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createRestaurantBodySchema))
-  async postRestaurants(@Body() body: CreateRestaurantBodySchema) {
-    await this.prisma.basicRestaurantInformation.create({
-      data: { ...body },
-    })
+  async postRestaurants(
+    @Body() body: CreateRestaurantBodySchema,
+    @CurrentUser() user: UserPayload,
+  ) {
+    const userId = user.sub
+
+    const restaurant = await this.getRestaurantInformation(userId)
+
+    if (restaurant) {
+      await this.updateRestaurantInformation(restaurant.id, body)
+    } else {
+      await this.createRestaurantInformation(userId, body)
+    }
   }
 }

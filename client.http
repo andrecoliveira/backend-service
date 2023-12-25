@@ -1,13 +1,24 @@
 @baseUrl = http://localhost:3333
 @contentType = application/json
+@authToken = {{authenticate.response.body.access_token}}
 
-# @name create_user
+# @name create_account
 POST {{baseUrl}}/accounts
 Content-Type: {{contentType}}
 
 {
-    "name": "John Doe",
-    "email": "johndoe@gmail.com",
+    "email": "johndoe2@gmail.com",
+    "password": "12345678"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/sessions
+Content-Type: {{contentType}}
+
+{
+    "email": "johndoe2@gmail.com",
     "password": "12345678"
 }
 
@@ -33,9 +44,10 @@ Content-Type: {{contentType}}
 # @name create_restaurant
 POST {{baseUrl}}/restaurants
 Content-Type: {{contentType}}
+Authorization: Bearer {{authToken}}
 
 {
-    "name": "Doc bar",
+    "name": "Doc bar8",
     "phone": "85999999992",
     "category": "bar",
     "city": "São Paulo",
@@ -55,5 +67,6 @@ Content-Type: {{contentType}}
 # @name list_restaurants
 GET {{baseUrl}}/restaurants
 Content-Type: {{contentType}}
+Authorization: Bearer {{authToken}}
 
 

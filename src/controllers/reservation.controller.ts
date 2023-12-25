@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpCode, Post, UsePipes } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
@@ -11,6 +20,7 @@ const createReservationBodySchema = z.object({
 type CreateReservationBodySchema = z.infer<typeof createReservationBodySchema>
 
 @Controller('reservations')
+@UseGuards(AuthGuard('jwt'))
 export class CreateReservationController {
   constructor(private prisma: PrismaService) {}
 

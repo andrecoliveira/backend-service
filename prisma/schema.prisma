@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/.prisma/client"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,46 +11,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  password String
-  role String @default("user")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-
-  @@map("users")
-}
-
 model Reservation {
-  id String @id @default(uuid())
-  name String
-  phone String 
-  status String @default("pending")
-  createdAt DateTime @default(now()) @map("created_at")
+  id        String    @id @default(uuid())
+  name      String
+  phone     String
+  status    String    @default("pending")
+  createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("reservations")
 }
 
+model User {
+  id                         String                       @id @default(uuid())
+  email                      String                       @unique
+  password                   String
+  role                       String                       @default("admin")
+  createdAt                  DateTime                     @default(now()) @map("created_at")
+  updatedAt                  DateTime?                    @updatedAt @map("updated_at")
+  BasicRestaurantInformation BasicRestaurantInformation[]
+
+  @@map("users")
+}
+
+model RestaurantProfileImage {
+  id               String  @id @default(uuid())
+  path             String
+  restaurantId     String
+
+  @@map("restaurant_profile_images")  
+}
+
 model BasicRestaurantInformation {
-  id String @id @default(uuid())
-  name String?
-  phone String?
-  category String?
-  city String?
-  state String?
-  streetName String?
-  streetNumber String?
+  id               String  @id @default(uuid())
+  name             String
+  phone            String
+  category         String
+  city             String
+  state            String
+  streetName       String
+  streetNumber     String
   streetComplement String?
-  zipCode String?
-  schedule String?
-  description String?
-  profileImage String?
-  instagramPath String?
-  websitePath String?
+  zipCode          String
+  schedule         String
+  description      String
+  instagramPath    String?
+  websitePath      String
+  userId           String
+
+  users User? @relation(fields: [userId], references: [id])
 
   @@map("restaurants")
 }
-

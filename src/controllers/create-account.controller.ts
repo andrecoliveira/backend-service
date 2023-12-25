@@ -12,7 +12,6 @@ import { hash } from 'bcryptjs'
 import { z } from 'zod'
 
 const createAccountBodySchema = z.object({
-  name: z.string(),
   email: z.string().email(),
   password: z.string().min(8),
 })
@@ -27,7 +26,7 @@ export class CreateAccountController {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
   async handle(@Body() body: CreateAccountBodySchema) {
-    const { name, email, password } = createAccountBodySchema.parse(body)
+    const { email, password } = createAccountBodySchema.parse(body)
 
     const userWithSameEmail = await this.prisma.user.findUnique({
       where: {
@@ -45,7 +44,6 @@ export class CreateAccountController {
 
     await this.prisma.user.create({
       data: {
-        name,
         email,
         password: hashedPassword,
       },
