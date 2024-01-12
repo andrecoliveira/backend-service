@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  Post,
-  Response,
-  Request,
-} from '@nestjs/common'
+import { Body, Controller, HttpCode, Post, Response } from '@nestjs/common'
 import axios from 'axios'
 
 const instance = axios.create({
@@ -19,13 +12,8 @@ const instance = axios.create({
 export class WebhookController {
   @Post()
   @HttpCode(200)
-  async sendMessage(
-    @Body() body: any,
-    @Request() req: any,
-    @Response() res: any,
-  ) {
+  async sendMessage(@Body() body: any, @Response() res: any) {
     console.log('BODY: ', body)
-    console.log('REQ: ', req)
     // const {
     //   phone,
     //   text: { message },
