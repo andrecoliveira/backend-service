@@ -5,6 +5,7 @@ import { CreateReservationController } from './controllers/reservation.controlle
 import { CreateRestaurantController } from './controllers/restaurant.controller'
 import { CreateAccountController } from './controllers/create-account.controller'
 import { AuthenticateController } from './controllers/authenticate-controller'
+import { WebhookController } from './controllers/webhook.controller'
 import { AuthModule } from './auth/auth.module'
 import { envSchema } from './env'
 
@@ -21,6 +22,7 @@ import { envSchema } from './env'
     CreateRestaurantController,
     CreateAccountController,
     AuthenticateController,
+    WebhookController,
   ],
   providers: [PrismaService],
 })
