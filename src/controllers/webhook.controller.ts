@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, Post, Response } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Response,
+  Request,
+} from '@nestjs/common'
 import axios from 'axios'
 
 const instance = axios.create({
@@ -12,27 +19,33 @@ const instance = axios.create({
 export class WebhookController {
   @Post()
   @HttpCode(200)
-  async sendMessage(@Body() body: any, @Response() res: any) {
-    const {
-      phone,
-      text: { message },
-    } = body
+  async sendMessage(
+    @Body() body: any,
+    @Request() req: any,
+    @Response() res: any,
+  ) {
+    console.table(body)
+    console.table(req)
+    // const {
+    //   phone,
+    //   text: { message },
+    // } = body
 
-    if (phone === '558588850088' && message === 'oi') {
-      try {
-        const response = await instance.post(
-          'https://api.z-api.io/instances/3C9395131E4380A8AC883A6238F22DFA/token/254F6FD8A40E02F2C93DE806/send-text',
-          {
-            phone,
-            message: 'Olá, tudo bem minha gatinha?',
-          },
-        )
+    // if (phone === '558597496471' && message === 'Olá') {
+    //   try {
+    //     const response = await instance.post(
+    //       'https://api.z-api.io/instances/3C9395131E4380A8AC883A6238F22DFA/token/254F6FD8A40E02F2C93DE806/send-text',
+    //       {
+    //         phone,
+    //         message: 'Olá, tudo bem minha Felipe?',
+    //       },
+    //     )
 
-        console.log('Mensagem enviada com sucesso:', response.data)
-      } catch (error) {
-        console.error('Erro ao enviar mensagem:', error)
-      }
-    }
+    //     // console.log('Mensagem enviada com sucesso:', response.data)
+    //   } catch (error) {
+    //     // console.error('Erro ao enviar mensagem:', error)
+    //   }
+    // }
 
     res.send({ message: 'ok' })
   }
