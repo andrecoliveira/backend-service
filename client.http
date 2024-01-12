@@ -27,6 +27,7 @@ Content-Type: {{contentType}}
 # @name create_reservation
 POST {{baseUrl}}/reservations
 Content-Type: {{contentType}}
+Authorization: Bearer {{authToken}}
 
 {
     "name": "John Doe",
@@ -38,6 +39,7 @@ Content-Type: {{contentType}}
 # @name list_reservation
 GET {{baseUrl}}/reservations
 Content-Type: {{contentType}}
+Authorization: Bearer {{authToken}}
 
 ###
 
@@ -70,24 +72,3 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{authToken}}
 
 ###
-
-POST {{baseUrl}}/webhook
-Content-Type: {{contentType}}
-
-{
-    "name": "Doc bar8",
-    "phone": "85999999992",
-    "category": "bar",
-    "city": "São Paulo",
-    "state": "SP",
-    "streetName": "Rua dos bobos",
-    "streetNumber": "10",
-    "streetComplement": "Apto 10",
-    "zipCode": "00000000",
-    "schedule": "10:00-22:00",
-    "description": "Barzinho da esquina",
-    "instagramPath": "https://www.instagram.com/docbar",
-    "websitePath": "https://www.docbar.com.br"
-}
-
-
