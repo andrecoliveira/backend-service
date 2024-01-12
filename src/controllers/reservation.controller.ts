@@ -17,7 +17,7 @@ export class CreateReservationController {
       const response = await instance.post(
         'https://api.z-api.io/instances/3C9395131E4380A8AC883A6238F22DFA/token/254F6FD8A40E02F2C93DE806/send-text',
         {
-          ...Body,
+          ...body,
         },
       )
 
