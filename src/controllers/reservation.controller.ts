@@ -20,6 +20,13 @@ const createReservationBodySchema = z.object({
 
 type CreateReservationBodySchema = z.infer<typeof createReservationBodySchema>
 
+const instance = axios.create({
+  baseURL:
+    'https://api.z-api.io/instances/3C9395131E4380A8AC883A6238F22DFA/token/254F6FD8A40E02F2C93DE806/send-text',
+  timeout: 1000,
+  headers: { 'client-token': 'Ff854860376ba486db3656fb87afcc396S' },
+})
+
 @Controller('reservations')
 @UseGuards(AuthGuard('jwt'))
 export class CreateReservationController {
@@ -37,17 +44,11 @@ export class CreateReservationController {
     const { name, phone } = body
 
     try {
-      const response = await axios.post(
+      const response = await instance.post(
         'https://api.z-api.io/instances/3C9395131E4380A8AC883A6238F22DFA/token/254F6FD8A40E02F2C93DE806/send-text',
         {
           phone,
           message: name,
-        },
-        {
-          headers: {
-            Authorization: 'Bearer 254F6FD8A40E02F2C93DE806',
-            'Content-Type': 'application/json',
-          },
         },
       )
 
