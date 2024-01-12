@@ -24,8 +24,8 @@ export class WebhookController {
     @Request() req: any,
     @Response() res: any,
   ) {
-    console.table(body)
-    console.table(req)
+    console.log('BODY: ', body)
+    console.log('REQ: ', req)
     // const {
     //   phone,
     //   text: { message },
