@@ -22,6 +22,10 @@ Comando para realizar testes E2E
 
 - pnpm test:e2e
 
+Comando para gerar uma chave secreta
+
+- openssl rand -hex 32
+
 Comando para gerar chave privada no linux/mac
 
 - openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2848
