@@ -1,6 +1,7 @@
 @baseUrl = http://localhost:3333
 @contentType = application/json
 @authToken = {{authenticate.response.body.access_token}}
+@cookie = {{authenticate.response.headers.Set-Cookie}}
 
 # @name create_account
 POST {{baseUrl}}/accounts
@@ -14,7 +15,7 @@ Content-Type: {{contentType}}
 ###
 
 # @name authenticate
-POST {{baseUrl}}/sessions
+POST {{baseUrl}}/login
 Content-Type: {{contentType}}
 
 {
@@ -24,10 +25,17 @@ Content-Type: {{contentType}}
 
 ###
 
+# @name whoami
+GET {{baseUrl}}/whoami
+Content-Type: {{contentType}}
+Cookie: {{cookie}}
+
+###
+
 # @name create_reservation
 POST {{baseUrl}}/reservations
 Content-Type: {{contentType}}
-Authorization: Bearer {{authToken}}
+Cookie: {{cookie}}
 
 {
     "name": "John Doe",
