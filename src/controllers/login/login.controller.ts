@@ -5,7 +5,6 @@ import {
   Post,
   UnauthorizedException,
   UsePipes,
-  Res,
 } from '@nestjs/common'
 import { PrismaService } from '@/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
@@ -30,10 +29,7 @@ export class AuthenticateController {
   @Post()
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(
-    @Body() body: AuthenticateBodySchema,
-    @Res({ passthrough: true }) res,
-  ) {
+  async handle(@Body() body: AuthenticateBodySchema) {
     const { email, password } = authenticateBodySchema.parse(body)
 
     const user = await this.prisma.user.findUnique({
@@ -52,18 +48,14 @@ export class AuthenticateController {
       throw new UnauthorizedException('User credentials do not match')
     }
 
-    const jwt = this.jwt.sign({ sub: user.id })
+    const accessTokenPayload = { sub: user.id }
 
-    res.cookie('uuid', jwt, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
-    })
+    const accessToken = this.jwt.sign(accessTokenPayload)
+    const refreshToken = this.jwt.sign(accessTokenPayload, { expiresIn: '7d' })
 
     return {
-      email: user.email,
-      role: user.role,
-      authenticatedAt: new Date().toISOString(),
+      access_token: accessToken,
+      refresh_token: refreshToken,
     }
   }
 }

@@ -6,11 +6,11 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { PrismaService } from '@/prisma/prisma.service'
-import { AuthGuard } from '@/auth/auth.guard'
 
 @Controller('/session')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard('jwt'))
 export class SessionController {
   constructor(private prisma: PrismaService) {}
 

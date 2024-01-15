@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@/auth/auth.guard'
+import { AuthGuard } from '@nestjs/passport'
 // import { AuthGuard } from '@nestjs/passport'
-import axios from 'axios'
+// import axios from 'axios'
 
 // const instance = axios.create({
 //   timeout: 1000,
@@ -9,7 +9,7 @@ import axios from 'axios'
 // })
 
 @Controller('reservations')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard('jwt'))
 export class CreateReservationController {
   @Post()
   @HttpCode(201)

@@ -21,6 +21,7 @@ import { JwtStrategy } from './jwt.strategy'
           },
           privateKey: Buffer.from(privateKey, 'base64'),
           publicKey: Buffer.from(publicKey, 'base64'),
+          expiresIn: '40min',
         }
       },
     }),
