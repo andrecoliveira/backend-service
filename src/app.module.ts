@@ -6,7 +6,7 @@ import { CreateRestaurantController } from './controllers/restaurant/restaurant.
 import { CreateAccountController } from './controllers/createAccount/create-account.controller'
 import { AuthenticateController } from './controllers/login/login.controller'
 import { WebhookController } from './controllers/webhook/webhook.controller'
-import { WhoamiController } from './controllers/whoami/whoami.controller'
+import { SessionController } from './controllers/session/session.controller'
 import { AuthModule } from './auth/auth.module'
 import { envSchema } from './env'
 
@@ -24,7 +24,7 @@ import { envSchema } from './env'
     CreateAccountController,
     AuthenticateController,
     WebhookController,
-    WhoamiController,
+    SessionController,
   ],
   providers: [PrismaService],
 })

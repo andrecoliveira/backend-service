@@ -9,9 +9,9 @@ import {
 import { PrismaService } from '@/prisma/prisma.service'
 import { AuthGuard } from '@/auth/auth.guard'
 
-@Controller('/whoami')
+@Controller('/session')
 @UseGuards(AuthGuard)
-export class WhoamiController {
+export class SessionController {
   constructor(private prisma: PrismaService) {}
 
   @Get()
