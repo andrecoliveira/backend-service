@@ -59,5 +59,11 @@ export class AuthenticateController {
       secure: true,
       sameSite: 'strict',
     })
+
+    return {
+      email: user.email,
+      role: user.role,
+      authenticatedAt: new Date().toISOString(),
+    }
   }
 }
